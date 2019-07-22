@@ -39,7 +39,6 @@ def check_text(text):
     :return: None
     """
     global wrong_text
-
     for i in range(len(text)):
         if 97 <= ord(text[i]) <= 122:
             wrong_text = False
@@ -47,6 +46,26 @@ def check_text(text):
         else:
             wrong_text = True
             break
+
+
+def find_letter_number(letter):
+    """
+    Finding a place of a letter in alphabet to encode
+    :param letter: Str
+    :return: Str
+    """
+    return alphabet.find(letter)
+
+
+def encode(x):
+    """
+    Encoding
+    :param x: int
+    :return: int
+    """
+    global key
+    global alphabet
+    return (x + int(key)) % 26
 
 
 while wrong_text:
@@ -59,5 +78,12 @@ while wrong_key:
     key = (input('Enter key for this encoding. Key must be integer: '))
     check_integer(key)
 
-if wrong_text == False and wrong_key == False:
-    print('starting encoding')
+
+if not wrong_text and not wrong_key:
+    e = ''
+    for i in range(len(klartext)):
+        number = encode(find_letter_number(klartext[i]))
+        print(number)
+else:
+    print('error')
+
