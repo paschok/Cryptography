@@ -68,6 +68,15 @@ def encode(x):
     return (x + int(key)) % 26
 
 
+def find_encoding(index):
+    """
+    Finding the letter in a alphabet
+    :param number:
+    :return: Str
+    """
+    return alphabet[index]
+
+
 while wrong_text:
     klartext = input('Enter a text you want to have encrypted. Text must only contain '
                          'letters from english alphabet: ')
@@ -83,7 +92,8 @@ if not wrong_text and not wrong_key:
     e = ''
     for i in range(len(klartext)):
         number = encode(find_letter_number(klartext[i]))
-        print(number)
+        e += find_encoding(number)
+    print(e)
 else:
     print('error')
 
