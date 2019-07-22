@@ -14,12 +14,13 @@ modulo = len(alphabet) + 1
 schluesseltext = ''
 
 wrong_key = True
+wrong_text = True
 
 
 def check_integer(key_check):
     """
     Checking whether the input key correct is
-    :param key_check:
+    :param key_check: key
     :return: None
     """
     global wrong_key
@@ -30,20 +31,33 @@ def check_integer(key_check):
         print("The number you've entered is not an integer")
 
 
+def check_text(text):
+    """
+    Checking whether the input text matches our condition - the alphabet.
+    Lowercase english alphabet has range between 97 and 122
+    :param text: klartext
+    :return: None
+    """
+    global wrong_text
+
+    for i in range(len(text)):
+        if 97 <= ord(text[i]) <= 122:
+            wrong_text = False
+            continue
+        else:
+            wrong_text = True
+            break
 
 
+while wrong_text:
+    klartext = input('Enter a text you want to have encrypted. Text must only contain '
+                         'letters from english alphabet: ')
 
-
-
-
-
-klartext = input('Enter a text you want to have encrypted. Text must only contain '
-                     'letters from english alphabet: ')
+    check_text(klartext.lower())
 
 while wrong_key:
     key = (input('Enter key for this encoding. Key must be integer: '))
     check_integer(key)
 
-
-for i in range(len(klartext)):
-    print(klartext[i])
+if wrong_text == False and wrong_key == False:
+    print('starting encoding')
