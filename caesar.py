@@ -6,7 +6,9 @@
     DECODING: d(X) = X0 - n mod 26
 
     klartext (de) = plain text
-    schluesseltext (de) = key text
+    schluesseltext (de) = encoded text
+
+    verschluesselungstext (de) = decoded text
 """
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
@@ -59,13 +61,24 @@ def find_letter_number(letter):
 
 def encode(x):
     """
-    Encoding
+    Encoding: e(X0) = x + n mod 26
     :param x: int
     :return: int
     """
     global key
     global alphabet
     return (x + int(key)) % 26
+
+
+def decode(x):
+    """
+    Decoding: e(X0) = x - n mod 26
+    :param x: int
+    :return: int
+    """
+    global key
+    global alphabet
+    return (x - int(key)) % 26
 
 
 def find_encoding(index):
@@ -77,6 +90,7 @@ def find_encoding(index):
     return alphabet[index]
 
 
+# ***** ENCODING *****
 while wrong_text:
     klartext = input('Enter a text you want to have encrypted. Text must only contain '
                          'letters from english alphabet: ')
@@ -89,11 +103,36 @@ while wrong_key:
 
 
 if not wrong_text and not wrong_key:
-    e = ''
+    schluesseltext = ''
     for i in range(len(klartext)):
         number = encode(find_letter_number(klartext[i]))
-        e += find_encoding(number)
-    print(e)
+        schluesseltext += find_encoding(number)
+    print(schluesseltext)
+
+
+# ***** DECODING *****
+decode_desire = input('Do you wish to decode anything? y / n: ')
+
+if decode_desire == 'y' or decode_desire == 'Y':
+    wrong_key = True
+    wrong_text = True
+
+    while wrong_text:
+        schluesseltext = input('Enter a text you want to have decoded. Text must only contain '
+                         'letters from english alphabet: ')
+
+        check_text(schluesseltext.lower())
+
+    while wrong_key:
+        key = (input('Enter key for this encoding. Key must be integer: '))
+        check_integer(key)
+
+    if not wrong_text and not wrong_key:
+        verschluesselungstext = ''
+        for i in range(len(schluesseltext)):
+            number = decode(find_letter_number(schluesseltext[i]))
+            verschluesselungstext += find_encoding(number)
+        print(verschluesselungstext)
 else:
-    print('error')
+    print('Goodbye. Hope you have had fun!')
 
