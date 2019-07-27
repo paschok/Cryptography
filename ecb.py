@@ -4,8 +4,8 @@
     the text unto blocks M-i
 
     I define inputted text with the help of Unicode and Unicode will continue helping me, but this time doing even more,
-    than before. Each word will be transferred into INT number according to Unicode, and than each INT will be
-    represented as bytes. Our range of possible numbers is as follows:
+    than before. Each letter will be transferred into INT number according to Unicode, and than each INT will be
+    represented as bytes. Our range of possible numbers is between:
     97 (decimal)  = 0110 0001 (binary)
     122 (decimal) = 0111 1010 (binary)
 
@@ -14,6 +14,8 @@
     ENCODING: Ek(Mi) = Ci ==> Ci = PM x Mi
     DECODING: Dk(Ci) = Mi ==> Mi = PM^(-1) x Ci
 
+    LETTERS_IN_BYTES = array of 'vectors', each of which represented a SEPARATE letter
+    PM = permutation matrix
 
     klartext (de) = plain text
     schluesseltext (de) = encoded text
@@ -26,6 +28,8 @@ N = 8
 schluesseltext = ''
 
 wrong_text = True
+
+LETTERS_IN_BYTES = []
 
 # Permutation Matrix. 'Handmade' so that we could see what she actually is
 PM = [
@@ -50,21 +54,6 @@ PM_1 = [
         [0, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 0],
     ]
-print(PM_1)
-
-
-def check_integer(key_check):
-    """
-    Checking whether the input key correct is
-    :param key_check: key
-    :return: None
-    """
-    global wrong_key
-    try:
-        if isinstance(int(key_check), int):
-            wrong_key = False
-    except:
-        print("The number you've entered is not an integer")
 
 
 def check_text(text):
@@ -84,16 +73,28 @@ def check_text(text):
             break
 
 
+def letters_to_bytes(text):
+    """
+    Since no known to me method seems to satisfy my needs in transporting letters into bytes,
+    I'll make my own method with blackjack and u know ...
+    :param text: str
+    :return: nested List of INT
+    """
+    global KL_BYTES
+
+
+
 # ***** ENCODING *****
 # Data must strongly be in range of english alphabet. That's why we do the verifying
 while wrong_text:
-    klartext = input('Enter a text you want to have encrypted. Text must only contain '
-                         'letters from english alphabet: ')
+    klartext = input('Enter a text you want to have encrypted. Text must only contain letters from english alphabet. '
+                     'No spacing, exclamation points whatsoever: ')
+    klartext = klartext.lower()
+    check_text(klartext)
 
-    check_text(klartext.lower())
-
-if not wrong_text and not wrong_key:
-    print('ECB is soon to come')
+if not wrong_text:
+    # sending text with data to be transferred into bytes
+    letters_to_bytes(klartext)
 else:
     print('Goodbye. Hope you have had fun!')
 
