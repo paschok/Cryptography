@@ -93,16 +93,19 @@ def find_encoding(index):
 # ***** ENCODING *****
 while wrong_text:
     klartext = input('Enter a text you want to have encrypted. Text must only contain '
-                         'letters from english alphabet: ')
+                     'letters from english alphabet. No spacing, exclamation points whatsoever: ')
 
-    check_text(klartext.lower())
+    klartext = klartext.lower()
+    check_text(klartext)
 
 while wrong_key:
     key = (input('Enter key for this encoding. Key must be integer: '))
     check_integer(key)
 
-
 if not wrong_text and not wrong_key:
+    print('sdsds', klartext)
+    # each letter has according number, that with method ENCODE changes and then points to another letter
+    # => aka new encoded letter
     schluesseltext = ''
     for i in range(len(klartext)):
         number = encode(find_letter_number(klartext[i]))
@@ -119,7 +122,7 @@ if decode_desire == 'y' or decode_desire == 'Y':
 
     while wrong_text:
         schluesseltext = input('Enter a text you want to have decoded. Text must only contain '
-                         'letters from english alphabet: ')
+                               'letters from english alphabet: ')
 
         check_text(schluesseltext.lower())
 
@@ -132,7 +135,6 @@ if decode_desire == 'y' or decode_desire == 'Y':
         for i in range(len(schluesseltext)):
             number = decode(find_letter_number(schluesseltext[i]))
             verschluesselungstext += find_encoding(number)
-        print(verschluesselungstext)
+        print('Your result of decoding: ', verschluesselungstext)
 else:
     print('Goodbye. Hope you have had fun!')
-
