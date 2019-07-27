@@ -4,8 +4,8 @@
     the text unto blocks M-i
 
     I define inputted text with the help of Unicode and Unicode will continue helping me, but this time doing even more,
-    than before. Each word will be transferred into INT number according to Unicode, and than each IINt will be represented
-    as bytes. Our range of possible numbers is as follows:
+    than before. Each word will be transferred into INT number according to Unicode, and than each INT will be
+    represented as bytes. Our range of possible numbers is as follows:
     97 (decimal)  = 0110 0001 (binary)
     122 (decimal) = 0111 1010 (binary)
 
@@ -25,7 +25,6 @@ alphabet = 'abcdefghijklmnopqrstuvwxyz'
 N = 8
 schluesseltext = ''
 
-wrong_key = True
 wrong_text = True
 
 # Permutation Matrix. 'Handmade' so that we could see what she actually is
@@ -52,8 +51,6 @@ PM_1 = [
         [1, 0, 0, 0, 0, 0, 0, 0],
     ]
 print(PM_1)
-
-
 
 
 def check_integer(key_check):
@@ -88,21 +85,15 @@ def check_text(text):
 
 
 # ***** ENCODING *****
+# Data must strongly be in range of english alphabet. That's why we do the verifying
 while wrong_text:
     klartext = input('Enter a text you want to have encrypted. Text must only contain '
                          'letters from english alphabet: ')
 
     check_text(klartext.lower())
 
-while wrong_key:
-    key = (input('Enter key for this encoding. Key must be integer: '))
-    check_integer(key)
-
-
 if not wrong_text and not wrong_key:
-    key = int(key)
-    print(3)
-    print(type(key))
+    print('ECB is soon to come')
 else:
     print('Goodbye. Hope you have had fun!')
 
