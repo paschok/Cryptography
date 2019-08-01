@@ -97,35 +97,19 @@ def letters_to_bytes(text):
     for i in range(len(LETTERS_IN_INT)):
         LETTERS_IN_INT[i] = ord(LETTERS_IN_INT[i])
 
-    # INT -> Bytes
-    for i in range(len(LETTERS_IN_INT)):
-        for j in range(N):
+    print('LETTERS_IN_INT: ', LETTERS_IN_INT)
 
-            LETTERS_IN_BYTES[i] = LETTERS_IN_INT[i]
+    # INT -> Bytes
+    for i in LETTERS_IN_INT:
+        LETTERS_IN_BYTES.append([int(x) for x in list('{0:0b}'.format(i))])
+
+    print('in bytes: ', LETTERS_IN_BYTES)
 
 
 
 # ***** ENCODING *****
 # Data must strongly be in range of english alphabet. That's why we do the verifying
 while wrong_text:
-    g = [120, 99]
-    f = []
-    for i in range(len(g)):
-        a = g[i] // 64
-        b = (g[i] - 64) // 32
-        c = (g[i] - 64 - 32) // 16
-        # 97 - 64 - 32 = 1, 1 // 16 = 0
-
-        if (g[i] - 64 - 32 - 16) < 0:
-            d = 0
-
-        f.append([0, a, b, c, d, e, ff, gg])
-        print('ff: ', ff)
-        print('gg: ', gg)
-    print('f ', f)
-
-
-
     klartext = input('Enter a text you want to have encrypted. Text must only contain letters from english alphabet. '
                      'No spacing, exclamation points whatsoever: ')
     klartext = klartext.lower()
@@ -134,7 +118,6 @@ while wrong_text:
 if not wrong_text:
     # sending text with data to be transferred into bytes
     letters_to_bytes(klartext)
-    print(LETTERS_IN_INT)
 else:
     print('Goodbye. Hope you have had fun!')
 
