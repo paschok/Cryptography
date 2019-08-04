@@ -1,15 +1,16 @@
 """
     ECB block cipher. The English alphabet, the number of letters is 26.
     The text is encoded using the permutation matrix PM and a the INTEGER number of divisions, that evenly divide
-    the text unto blocks M-i
+    the text unto blocks M-i, with block length N
 
     I define inputted text with the help of Unicode and Unicode will continue helping me, but this time doing even more,
     than before. Each letter will be transferred into INT number according to Unicode, and than each INT will be
     represented as bytes. Our range of possible numbers is between:
     97 (decimal)  = 0110 0001 (binary)
     122 (decimal) = 0111 1010 (binary)
-
-    Based on this our length is: N = 8
+    IMPORTANT: The highest number in english alphabet does not exceed number 128, which means, that the highest bit (128)
+    will always be 0. So there is no need to implement 2 bytes, but only 1 + 7 bits. Also, the method int -> bits
+    given by Python returns 7 bits, instead of 8, so based on this our length is: N = 7
 
     ENCODING: Ek(Mi) = Ci ==> Ci = PM x Mi
     DECODING: Dk(Ci) = Mi ==> Mi = PM^(-1) x Ci
@@ -35,26 +36,26 @@ LETTERS_IN_BYTES = []
 
 # Permutation Matrix. 'Handmade' so that we could see what she actually is
 PM = [
-        [0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0],
     ]
 
 # PM^-1 is needed for decoding and looks like this:
 PM_1 = [
-        [0, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0, 1, 0],
-        [0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0],
     ]
 
 
@@ -104,8 +105,6 @@ def letters_to_bytes(text):
         LETTERS_IN_BYTES.append([int(x) for x in list('{0:0b}'.format(i))])
 
     print('in bytes: ', LETTERS_IN_BYTES)
-
-
 
 # ***** ENCODING *****
 # Data must strongly be in range of english alphabet. That's why we do the verifying
